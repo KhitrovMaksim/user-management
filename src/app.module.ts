@@ -5,6 +5,7 @@ import { FilesModule } from './files/files.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
+    MongooseModule.forRoot(process.env.MONGO_URL_USER_MANAGMENT),
     FilesModule,
     UsersModule,
     AuthModule,

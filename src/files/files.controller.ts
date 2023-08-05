@@ -18,7 +18,7 @@ export class FilesController {
   constructor(private readonly filesService: FilesServiceAbstract) {}
 
   @Get()
-  getUsers() {
+  getFiles() {
     return this.filesService.getListOfFiles();
   }
 
