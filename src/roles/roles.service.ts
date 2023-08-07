@@ -4,7 +4,6 @@ import { CreateRoleDto } from './dtos/create-role.dto';
 import { Role } from './schemas/role.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { Roles } from './enums/role.enum';
 
 @Injectable()
 export class RolesService extends RolesServiceAbstract {
@@ -22,8 +21,13 @@ export class RolesService extends RolesServiceAbstract {
     return roles;
   }
 
-  async getRoleByName(roleName: Roles): Promise<Role> {
+  async getRoleByName(roleName: string): Promise<Role> {
     const role = await this.roleModel.findOne({ role: roleName });
+    return role;
+  }
+
+  async getRoleById(roleId: Role): Promise<Role> {
+    const role = await this.roleModel.findOne({ _id: roleId });
     return role;
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { AddPayloadInterface } from './interfaces/add-payload.interface';
 
 @Injectable()
 export class TokenService {
@@ -9,19 +10,10 @@ export class TokenService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async generateJwtToken(user): Promise<string> {
-    const payload = {
-      id: user._id,
-      nickname: user.nickname,
-      role: user.role,
-      updated_at: user.updated_at,
-    };
-    return this.jwtService.sign(
-      { payload },
-      {
-        secret: this.configService.getOrThrow('PRIVATE_KEY'),
-        expiresIn: '24h',
-      },
-    );
+  public async generateJwtToken(payload: AddPayloadInterface): Promise<string> {
+    return this.jwtService.sign(payload, {
+      secret: this.configService.getOrThrow('PRIVATE_KEY'),
+      expiresIn: '24h',
+    });
   }
 }

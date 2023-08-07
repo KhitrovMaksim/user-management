@@ -5,7 +5,6 @@ import { User } from './schemas/user.schema';
 import * as mongoose from 'mongoose';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { RolesServiceAbstract } from '../roles/roles-service-abstract/roles-service-abstract';
-import { Roles } from '../roles/enums/role.enum';
 import { Hash } from '../libs/hash/hash';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
@@ -29,13 +28,7 @@ export class UsersService extends UsersServiceAbstract {
   }
 
   async createUser(dto: CreateUserDto): Promise<User> {
-    const hashedPassword = await Hash.getHashedPassword(dto.password);
-    const role = await this.roleService.getRoleByName(Roles.USER);
-    const newUserWithExtraData = await this.userModel.create({
-      ...dto,
-      password: hashedPassword,
-      role: role._id,
-    });
+    const newUserWithExtraData = await this.userModel.create(dto);
     const jsonNewUser = JSON.stringify(newUserWithExtraData);
     const newUserOnlyWithUserData = JSON.parse(jsonNewUser);
     return newUserOnlyWithUserData;
