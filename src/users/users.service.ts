@@ -31,16 +31,22 @@ export class UsersService extends UsersServiceAbstract {
   async createUser(dto: CreateUserDto): Promise<User> {
     const hashedPassword = await Hash.getHashedPassword(dto.password);
     const role = await this.roleService.getRoleByName(Roles.USER);
-    const user = await this.userModel.create({
+    const newUserWithExtraData = await this.userModel.create({
       ...dto,
       password: hashedPassword,
       role: role._id,
     });
-    return user;
+    const jsonNewUser = JSON.stringify(newUserWithExtraData);
+    const newUserOnlyWithUserData = JSON.parse(jsonNewUser);
+    return newUserOnlyWithUserData;
   }
 
   async updateUser(dto: UpdateUserDto): Promise<User> {
     const user = await this.userModel.findOne({ nickname: dto.nickname });
     return user;
+  }
+
+  async findUserByNickname(nickname: string): Promise<User> {
+    return this.userModel.findOne({ nickname });
   }
 }

@@ -22,5 +22,11 @@ import { RoleSchema } from '../roles/schemas/role.schema';
       useClass: UsersService,
     },
   ],
+  exports: [
+    {
+      provide: UsersServiceAbstract,
+      useClass: UsersService,
+    },
+  ],
 })
 export class UsersModule {}

@@ -23,11 +23,6 @@ export class UsersController {
     return this.usersService.getListOfUsers();
   }
 
-  @Post()
-  registration(@Body() userDto: CreateUserDto) {
-    return this.usersService.createUser(userDto);
-  }
-
   @Put()
   update() {}
 

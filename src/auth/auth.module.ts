@@ -6,19 +6,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../users/schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { UsersModule } from '../users/users.module';
+import { TokenModule } from '../token/token.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.getOrThrow('PRIVATE_KEY'),
-        signOptions: {
-          expiresIn: '24h',
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    UsersModule,
+    TokenModule,
   ],
   controllers: [AuthController],
   providers: [

@@ -7,18 +7,20 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RolesModule } from './roles/roles.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: '.env',
     }),
     MongooseModule.forRoot(process.env.MONGO_URL_USER_MANAGMENT),
     FilesModule,
     UsersModule,
     AuthModule,
     RolesModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

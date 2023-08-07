@@ -6,6 +6,8 @@ export type UserDocument = mongoose.HydratedDocument<User>;
 
 @Schema()
 export class User {
+  _id: mongoose.Schema.Types.ObjectId;
+
   @Prop({ required: true, unique: true })
   nickname: string;
 
