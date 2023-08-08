@@ -9,7 +9,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../users/schemas/user.schema';
 import mongoose from 'mongoose';
 import { UsersServiceAbstract } from '../users/users-service-abstract/users-service-abstract';
-import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { TokenService } from '../token/token.service';
 import { Hash } from '../libs/hash/hash';
 import { RolesServiceAbstract } from '../roles/roles-service-abstract/roles-service-abstract';

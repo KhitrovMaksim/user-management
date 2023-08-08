@@ -23,7 +23,7 @@ export class UsersController {
 
   @Get()
   getUsers(@Query() query: UsersPaginationDto) {
-    return this.usersService.getListOfUsers();
+    return this.usersService.getListOfUsers(query);
   }
 
   @Roles(['admin'])

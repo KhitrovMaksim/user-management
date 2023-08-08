@@ -13,6 +13,7 @@ import { RolesServiceAbstract } from '../roles/roles-service-abstract/roles-serv
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UpdateUserInterface } from './interfaces/update-user.interface';
 import { Hash } from '../libs/hash/hash';
+import { UsersPaginationDto } from './dtos/users-pagination.dto';
 
 @Injectable()
 export class UsersService extends UsersServiceAbstract {
@@ -23,11 +24,19 @@ export class UsersService extends UsersServiceAbstract {
     super();
   }
 
-  async getListOfUsers(): Promise<User[]> {
+  async getListOfUsers(query: UsersPaginationDto): Promise<User[]> {
     const users = await this.userModel
       .find({ deleted_at: { $eq: null } })
       .select('_id nickname firstname lastname updated_at');
-    return users;
+
+    if (!query.page || !query.limit) {
+      return users;
+    }
+
+    const startIndex: number = (query.page - 1) * query.limit;
+    const endIndex: number = query.page * query.limit;
+    const result: User[] = users.slice(startIndex, endIndex);
+    return result;
   }
 
   async deleteUser(userId: string): Promise<User> {
