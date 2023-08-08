@@ -9,11 +9,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../users/schemas/user.schema';
 import mongoose from 'mongoose';
 import { UsersServiceAbstract } from '../users/users-service-abstract/users-service-abstract';
-import { TokenService } from '../token/token.service';
 import { Hash } from '../libs/hash/hash';
 import { RolesServiceAbstract } from '../roles/roles-service-abstract/roles-service-abstract';
 import { Role } from '../roles/schemas/role.schema';
 import { RegisterUserDto } from './dtos/register-user.dto';
+import { TokenServiceAbstract } from '../token/token-service-abstract/token-service-abstract';
 
 @Injectable()
 export class AuthService extends AuthServiceAbstract {
@@ -21,7 +21,7 @@ export class AuthService extends AuthServiceAbstract {
     @InjectModel(User.name) private userModel: mongoose.Model<User>,
     private readonly usersService: UsersServiceAbstract,
     private readonly rolesService: RolesServiceAbstract,
-    private readonly tokenService: TokenService,
+    private readonly tokenService: TokenServiceAbstract,
   ) {
     super();
   }
