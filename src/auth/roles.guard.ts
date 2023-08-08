@@ -33,7 +33,7 @@ export class RolesGuard implements CanActivate {
 
       if (bearer !== 'Bearer' || !token) {
         throw new UnauthorizedException({
-          message: 'Пользователь не авторизован',
+          message: 'User not authorized',
         });
       }
 
@@ -42,7 +42,7 @@ export class RolesGuard implements CanActivate {
       return requiredRoles.includes(req.user.role);
     } catch (e) {
       console.log(e);
-      throw new HttpException('Нет доступа', HttpStatus.FORBIDDEN);
+      throw new HttpException('Access denied', HttpStatus.FORBIDDEN);
     }
   }
 }
