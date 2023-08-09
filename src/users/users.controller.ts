@@ -10,11 +10,13 @@ import {
   UseGuards,
   Param,
   HttpException,
+  Post,
+  Request,
 } from '@nestjs/common';
 import { UsersServiceAbstract } from './users-service-abstract/users-service-abstract';
 import { UsersPaginationDto } from './dtos/users-pagination.dto';
-import { Roles } from '../auth/roles-auth.decorator';
-import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/decorators/roles-auth.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('users')
@@ -24,6 +26,11 @@ export class UsersController {
   @Get()
   getUsers(@Query() query: UsersPaginationDto) {
     return this.usersService.getListOfUsers(query);
+  }
+
+  @Get('rating')
+  getRating() {
+    return this.usersService.getListOfUsersWithRating();
   }
 
   @Roles(['admin'])

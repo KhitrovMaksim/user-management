@@ -1,17 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { RolesServiceAbstract } from './roles-service-abstract/roles-service-abstract';
 import { CreateRoleDto } from './dtos/create-role.dto';
 import { Role } from './schemas/role.schema';
-import { Roles } from '../auth/roles-auth.decorator';
-import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/decorators/roles-auth.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('roles')
 export class RolesController {
@@ -20,7 +12,7 @@ export class RolesController {
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Get()
-  getRoles(@Request() req): Promise<Role[]> {
+  getRoles(): Promise<Role[]> {
     return this.rolesService.getListOfRoles();
   }
   @Roles(['admin'])

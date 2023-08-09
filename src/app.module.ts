@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RolesModule } from './roles/roles.module';
 import { TokenModule } from './token/token.module';
+import { VotesModule } from './votes/votes.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TokenModule } from './token/token.module';
     AuthModule,
     RolesModule,
     TokenModule,
+    VotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

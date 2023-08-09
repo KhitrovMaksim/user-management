@@ -3,6 +3,7 @@ import { TokenService } from './token.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TokenServiceAbstract } from './token-service-abstract/token-service-abstract';
+import { JwtStrategy } from '../auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { TokenServiceAbstract } from './token-service-abstract/token-service-abs
       provide: TokenServiceAbstract,
       useClass: TokenService,
     },
-    JwtService,
+    JwtStrategy,
   ],
   exports: [
     {

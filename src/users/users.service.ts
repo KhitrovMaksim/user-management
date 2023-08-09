@@ -9,25 +9,22 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import * as mongoose from 'mongoose';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { RolesServiceAbstract } from '../roles/roles-service-abstract/roles-service-abstract';
-import { UpdateUserDto } from './dtos/update-user.dto';
 import { UpdateUserInterface } from './interfaces/update-user.interface';
 import { Hash } from '../libs/hash/hash';
 import { UsersPaginationDto } from './dtos/users-pagination.dto';
+import { LastVoteUpdateDto } from './dtos/last-vote-update.dto';
+import { usersWithRating } from './queries/aggregate.query';
 
 @Injectable()
 export class UsersService extends UsersServiceAbstract {
-  constructor(
-    @InjectModel(User.name) private userModel: mongoose.Model<User>,
-    private roleService: RolesServiceAbstract,
-  ) {
+  constructor(@InjectModel(User.name) private userModel: mongoose.Model<User>) {
     super();
   }
 
   async getListOfUsers(query: UsersPaginationDto): Promise<User[]> {
-    const users = await this.userModel
+    const users: User[] = await this.userModel
       .find({ deleted_at: { $eq: null } })
-      .select('_id nickname firstname lastname updated_at');
+      .select('_id nickname firstname lastname updated_at role');
 
     if (!query.page || !query.limit) {
       return users;
@@ -41,7 +38,7 @@ export class UsersService extends UsersServiceAbstract {
 
   async deleteUser(userId: string): Promise<User> {
     try {
-      const user = await this.userModel.findOne({ _id: userId });
+      const user: User = await this.userModel.findOne({ _id: userId });
 
       if (!user)
         throw new NotFoundException({
@@ -141,5 +138,20 @@ export class UsersService extends UsersServiceAbstract {
 
   async findUserByNickname(nickname: string): Promise<User> {
     return this.userModel.findOne({ nickname });
+  }
+
+  async findUserById(id: string): Promise<User> {
+    return this.userModel.findOne({ _id: id });
+  }
+
+  async updateUserLastVote(lastVoteDto: LastVoteUpdateDto): Promise<User> {
+    return this.userModel.findOneAndUpdate(
+      { _id: lastVoteDto.userId },
+      { last_vote: new Date().toISOString() },
+    );
+  }
+
+  async getListOfUsersWithRating(): Promise<User[]> {
+    return this.userModel.aggregate(usersWithRating);
   }
 }

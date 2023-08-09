@@ -13,8 +13,8 @@ import { RolesModule } from '../roles/roles.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    forwardRef(() => UsersModule),
-    forwardRef(() => RolesModule),
+    UsersModule,
+    RolesModule,
     TokenModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
