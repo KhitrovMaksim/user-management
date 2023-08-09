@@ -41,10 +41,15 @@ export class FilesController {
       }),
     )
     file: Express.Multer.File,
+    @User() user: JwtPayloadDto,
   ) {
     await this.filesService.uploadFile({
       fileName: file.originalname,
       file: file.buffer,
+      info: {
+        purpose: 'file',
+        userId: user.id,
+      },
     });
   }
 

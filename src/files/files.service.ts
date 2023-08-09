@@ -36,6 +36,7 @@ export class FilesService extends FilesServiceAbstract {
         Bucket: this.configService.getOrThrow('AWS_S3_BUCKET'),
         Key: dto.fileName,
         Body: dto.file,
+        Metadata: dto.info,
       }),
     );
   }
