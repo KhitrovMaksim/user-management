@@ -45,3 +45,6 @@ nest g class VotesServiceAbstract votes
 nest g module queues
 
 npm run start:dev
+
+docker-compose build
+docker-compose up
