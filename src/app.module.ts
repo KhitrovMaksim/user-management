@@ -10,6 +10,7 @@ import { RolesModule } from './roles/roles.module';
 import { TokenModule } from './token/token.module';
 import { VotesModule } from './votes/votes.module';
 import { QueuesModule } from './queues/queues.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { QueuesModule } from './queues/queues.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    ScheduleModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL_USER_MANAGMENT),
     FilesModule,
     UsersModule,

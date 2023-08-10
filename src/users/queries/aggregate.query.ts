@@ -7,6 +7,7 @@ export const usersWithRating = [
       nickname: 1,
       firstname: 1,
       lastname: 1,
+      avatar_url: 1,
     },
   },
   {
@@ -23,6 +24,7 @@ export const usersWithRating = [
       nickname: 1,
       firstname: 1,
       lastname: 1,
+      avatar_url: 1,
       rating: {
         $sum: '$votes.vote',
       },

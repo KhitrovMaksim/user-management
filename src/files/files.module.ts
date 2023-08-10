@@ -29,5 +29,11 @@ import { AuthModule } from '../auth/auth.module';
       useClass: ThrottlerGuard,
     },
   ],
+  exports: [
+    {
+      provide: FilesServiceAbstract,
+      useClass: FilesService,
+    },
+  ],
 })
 export class FilesModule {}

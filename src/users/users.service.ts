@@ -24,7 +24,7 @@ export class UsersService extends UsersServiceAbstract {
   async getListOfUsers(query: UsersPaginationDto): Promise<User[]> {
     const users: User[] = await this.userModel
       .find({ deleted_at: { $eq: null } })
-      .select('_id nickname firstname lastname updated_at role');
+      .select('_id nickname firstname lastname updated_at role avatar_url');
 
     if (!query.page || !query.limit) {
       return users;
@@ -153,5 +153,11 @@ export class UsersService extends UsersServiceAbstract {
 
   async getListOfUsersWithRating(): Promise<User[]> {
     return this.userModel.aggregate(usersWithRating);
+  }
+
+  async addAvatarUrl(userId: string, url: string): Promise<void> {
+    console.log('userId: ', userId);
+    console.log(url);
+    await this.userModel.findOneAndUpdate({ _id: userId }, { avatar_url: url });
   }
 }

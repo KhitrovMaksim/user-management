@@ -6,10 +6,10 @@ import {
   Param,
   ParseFilePipe,
   Post,
-  UploadedFile,
-  UseInterceptors,
   StreamableFile,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FilesServiceAbstract } from './files-service-abstract/files-service-abstract';
@@ -41,15 +41,10 @@ export class FilesController {
       }),
     )
     file: Express.Multer.File,
-    @User() user: JwtPayloadDto,
   ) {
-    await this.filesService.uploadFile({
+    return this.filesService.uploadFile({
       fileName: file.originalname,
       file: file.buffer,
-      info: {
-        purpose: 'file',
-        userId: user.id,
-      },
     });
   }
 
@@ -65,18 +60,18 @@ export class FilesController {
     file: Express.Multer.File,
     @User() user: JwtPayloadDto,
   ) {
-    return user;
-    // await this.filesService.uploadFile({
-    //   fileName: file.originalname,
-    //   file: file.buffer,
-    // });
+    const fileName = user.id + '_' + file.originalname;
+    return this.filesService.uploadFile({
+      fileName,
+      file: file.buffer,
+    });
   }
 
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Delete(':fileName')
   async deleteFile(@Param('fileName') fileName: string) {
-    await this.filesService.deleteFile(fileName);
+    this.filesService.deleteFile(fileName);
   }
 
   @Roles(['admin'])

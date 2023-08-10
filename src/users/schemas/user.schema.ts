@@ -34,6 +34,9 @@ export class User {
 
   @Prop({ default: null })
   deleted_at: Date;
+
+  @Prop()
+  avatar_url: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

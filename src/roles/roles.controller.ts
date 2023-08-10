@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { RolesServiceAbstract } from './roles-service-abstract/roles-service-abstract';
 import { CreateRoleDto } from './dtos/create-role.dto';
 import { Role } from './schemas/role.schema';
@@ -24,6 +33,7 @@ export class RolesController {
 
   @Roles(['admin'])
   @UseGuards(RolesGuard)
+  @UsePipes(ValidationPipe)
   @Post()
   createRole(@Body() roleDto: CreateRoleDto) {
     return this.rolesService.createRole(roleDto);

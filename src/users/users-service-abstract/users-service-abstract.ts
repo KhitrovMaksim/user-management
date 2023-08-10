@@ -13,4 +13,5 @@ export abstract class UsersServiceAbstract {
   abstract deleteUser(userId: string): Promise<User>;
   abstract findUserById(id: string): Promise<User>;
   abstract updateUserLastVote(lastVoteDto: LastVoteUpdateDto): Promise<User>;
+  abstract addAvatarUrl(userId: string, url: string): Promise<void>;
 }
