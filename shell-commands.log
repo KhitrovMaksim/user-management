@@ -1,0 +1,50 @@
+npm i @aws-sdk/client-s3
+npm i @aws-sdk/client-sqs
+npm i @aws-sdk/s3-request-presigner
+npm i @nestjs/config
+npm i @nestjs/throttler
+npm i @nestjs/mongoose mongoose
+npm i @nestjs/swagger swagger-ui-express
+npm i @nestjs/jwt
+npm i @nestjs/schedule
+npm i -D @types/multer
+npm i --save @nestjs/passport passport passport-jwt
+npm i --save-dev @types/passport-jwt
+npm i class-validator
+npm i class-transformer
+
+nest g module files
+nest g controller files
+nest g service files
+nest g class FilesServiceAbstract files
+
+nest g module users
+nest g controller users
+nest g service users
+nest g class UsersServiceAbstract users
+
+nest g module auth
+nest g controller auth
+nest g service auth
+nest g class AuthServiceAbstract auth
+
+nest g module roles
+nest g controller roles
+nest g service roles
+nest g class RolesServiceAbstract roles
+
+nest g module token
+nest g service token
+nest g class TokenServiceAbstract token
+
+nest g module votes
+nest g controller votes
+nest g service votes
+nest g class VotesServiceAbstract votes
+
+nest g module queues
+
+npm run start:dev
+
+docker-compose build
+docker-compose up
