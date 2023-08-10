@@ -17,7 +17,9 @@ import { JwtService } from '@nestjs/jwt';
 import { DeleteVoteDto } from './dtos/delete-vote.dto';
 import { User } from '../auth/decorators/user.decorator';
 import { JwtPayloadDto } from '../auth/dtos/jwt-payload.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Votes')
 @Controller('votes')
 export class VotesController {
   constructor(
@@ -25,6 +27,7 @@ export class VotesController {
     private readonly jwtService: JwtService,
   ) {}
 
+  @ApiOperation({ summary: 'Voting' })
   @UseGuards(JwtAuthGuard)
   @Post(':id')
   add(
@@ -47,6 +50,7 @@ export class VotesController {
     return this.votesService.addVote(voteDto);
   }
 
+  @ApiOperation({ summary: 'Update vote' })
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(
@@ -69,6 +73,7 @@ export class VotesController {
     return this.votesService.updateVote(voteDto);
   }
 
+  @ApiOperation({ summary: 'Delete vote' })
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string, @User() user: JwtPayloadDto) {

@@ -13,17 +13,22 @@ import { CreateRoleDto } from './dtos/create-role.dto';
 import { Role } from './schemas/role.schema';
 import { Roles } from '../auth/decorators/roles-auth.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Roles')
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesServiceAbstract) {}
 
+  @ApiOperation({ summary: 'Get list of roles' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Get()
   getRoles(): Promise<Role[]> {
     return this.rolesService.getListOfRoles();
   }
+
+  @ApiOperation({ summary: 'Get role by name' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Get('/:role')
@@ -31,6 +36,7 @@ export class RolesController {
     return this.rolesService.getRoleByName(role);
   }
 
+  @ApiOperation({ summary: 'Create new role' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)

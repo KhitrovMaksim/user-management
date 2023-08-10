@@ -18,11 +18,14 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../auth/decorators/user.decorator';
 import { JwtPayloadDto } from '../auth/dtos/jwt-payload.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Files')
 @Controller('files')
 export class FilesController {
   constructor(private readonly filesService: FilesServiceAbstract) {}
 
+  @ApiOperation({ summary: 'Get list of files from AWS S3' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Get()
@@ -30,6 +33,7 @@ export class FilesController {
     return this.filesService.getListOfFiles();
   }
 
+  @ApiOperation({ summary: 'Upload file to AWS S3' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Post()
@@ -48,6 +52,7 @@ export class FilesController {
     });
   }
 
+  @ApiOperation({ summary: 'Upload avatar to AWS S3' })
   @UseGuards(JwtAuthGuard)
   @Post('avatar')
   @UseInterceptors(FileInterceptor('avatar'))
@@ -67,6 +72,7 @@ export class FilesController {
     });
   }
 
+  @ApiOperation({ summary: 'Delete file from AWS S3' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Delete(':fileName')
@@ -74,6 +80,7 @@ export class FilesController {
     this.filesService.deleteFile(fileName);
   }
 
+  @ApiOperation({ summary: 'Download file from AWS S3' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Get(':fileName')

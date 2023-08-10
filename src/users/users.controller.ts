@@ -18,21 +18,28 @@ import { UsersPaginationDto } from './dtos/users-pagination.dto';
 import { Roles } from '../auth/decorators/roles-auth.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './schemas/user.schema';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersServiceAbstract) {}
 
+  @ApiOperation({ summary: 'Get all users with or without pagination' })
+  @ApiResponse({ status: 200, type: [User] })
   @Get()
-  getUsers(@Query() query: UsersPaginationDto) {
+  getUsers(@Query() query: UsersPaginationDto): Promise<User[]> {
     return this.usersService.getListOfUsers(query);
   }
 
+  @ApiOperation({ summary: 'Get all users with rating' })
   @Get('rating')
-  getRating() {
+  getRating(): Promise<User[]> {
     return this.usersService.getListOfUsersWithRating();
   }
 
+  @ApiOperation({ summary: 'Update user information' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Put(':id')
@@ -56,7 +63,7 @@ export class UsersController {
       throw new HttpException('Incorrect id', HttpStatus.BAD_REQUEST);
     return this.usersService.updateUser({ ...userDto, id, unmodifiedSince });
   }
-
+  @ApiOperation({ summary: 'Delete user' })
   @Roles(['admin'])
   @UseGuards(RolesGuard)
   @Delete(':id')
