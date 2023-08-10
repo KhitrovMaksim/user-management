@@ -24,7 +24,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
       if (bearer !== 'Bearer' || !token) {
         throw new UnauthorizedException({
-          message: 'Пользователь не авторизован',
+          message: 'User not authorized',
         });
       }
 
@@ -33,7 +33,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       return true;
     } catch (e) {
       throw new UnauthorizedException({
-        message: 'Пользователь не авторизован',
+        message: 'User not authorized',
       });
     }
   }
