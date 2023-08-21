@@ -27,7 +27,7 @@ export class QueuesProcessor {
     this.client = new SQSClient({ region: this.awsRegion });
   }
 
-  @Interval(10000)
+  @Interval(999999999)
   async processor() {
     try {
       const response: ReceiveMessageCommandOutput = await this.client.send(
