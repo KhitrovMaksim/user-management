@@ -18,7 +18,6 @@ import { TokenServiceAbstract } from '../token/token-service-abstract/token-serv
 @Injectable()
 export class AuthService extends AuthServiceAbstract {
   constructor(
-    @InjectModel(User.name) private userModel: mongoose.Model<User>,
     private readonly usersService: UsersServiceAbstract,
     private readonly rolesService: RolesServiceAbstract,
     private readonly tokenService: TokenServiceAbstract,

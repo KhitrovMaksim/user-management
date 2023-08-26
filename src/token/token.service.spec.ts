@@ -1,6 +1,5 @@
 import { TokenService } from './token.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { JwtStrategy } from '../auth/jwt.strategy';
 import { JwtService } from '@nestjs/jwt';
 import mongoose from 'mongoose';
 import { ConfigService } from '@nestjs/config';
