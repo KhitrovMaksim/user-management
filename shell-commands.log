@@ -10,8 +10,10 @@ npm i @nestjs/schedule
 npm i -D @types/multer
 npm i --save @nestjs/passport passport passport-jwt
 npm i --save-dev @types/passport-jwt
+npm i --save-dev @nestjs/testing
 npm i class-validator
 npm i class-transformer
+
 
 nest g module files
 nest g controller files

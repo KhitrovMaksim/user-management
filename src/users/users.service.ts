@@ -156,8 +156,6 @@ export class UsersService extends UsersServiceAbstract {
   }
 
   async addAvatarUrl(userId: string, url: string): Promise<void> {
-    console.log('userId: ', userId);
-    console.log(url);
     await this.userModel.findOneAndUpdate({ _id: userId }, { avatar_url: url });
   }
 }
